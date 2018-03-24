@@ -7,9 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
+    <lastBuildDate>Mon, 12 Mar 2018 10:53:21 +0000</lastBuildDate>
     
 	<atom:link href="https://www.scottguymer.co.uk/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>C#</title>
+      <link>https://www.scottguymer.co.uk/categories/c#/</link>
+      <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/categories/c#/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Deployment</title>
@@ -17,6 +27,15 @@
       <pubDate>Sat, 24 Mar 2018 11:39:23 +0000</pubDate>
       
       <guid>https://www.scottguymer.co.uk/categories/deployment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linq</title>
+      <link>https://www.scottguymer.co.uk/categories/linq/</link>
+      <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/categories/linq/</guid>
       <description></description>
     </item>
     

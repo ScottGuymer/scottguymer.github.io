@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/blog/making-linq-testable-in-isolation/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/blog/my-software-engineering-reading-list/</loc>
     <lastmod>2018-03-09T17:54:40+00:00</lastmod>
   </url>
@@ -24,7 +29,20 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/c#/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/categories/c#/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/categories/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -41,6 +59,18 @@
   <url>
     <loc>https://www.scottguymer.co.uk/categories/deployment/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/tags/linq/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/categories/linq/</loc>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -76,7 +106,7 @@
   
   <url>
     <loc>https://www.scottguymer.co.uk/tags/</loc>
-    <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
   </url>
   
