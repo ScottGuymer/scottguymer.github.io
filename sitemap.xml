@@ -3,61 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://scottguymer.github.io/blog/aggregating-application-deployment-data/</loc>
+    <loc>https://www.scottguymer.co.uk/blog/aggregating-application-deployment-data/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/blog/my-software-engineering-reading-list/</loc>
+    <loc>https://www.scottguymer.co.uk/blog/my-software-engineering-reading-list/</loc>
     <lastmod>2018-03-09T17:54:40+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/about/</loc>
+    <loc>https://www.scottguymer.co.uk/about/</loc>
     <lastmod>2014-04-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/blog/</loc>
+    <loc>https://www.scottguymer.co.uk/archives/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/blog/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/categories/</loc>
+    <loc>https://www.scottguymer.co.uk/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/contact/</loc>
+    <loc>https://www.scottguymer.co.uk/contact/</loc>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/categories/deployment/</loc>
+    <loc>https://www.scottguymer.co.uk/categories/deployment/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/categories/reading/</loc>
+    <loc>https://www.scottguymer.co.uk/categories/reading/</loc>
     <lastmod>2018-03-09T17:54:40+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/</loc>
+    <loc>https://www.scottguymer.co.uk/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/categories/software-engineering/</loc>
+    <loc>https://www.scottguymer.co.uk/categories/software-engineering/</loc>
     <lastmod>2018-03-09T17:54:40+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://scottguymer.github.io/tags/</loc>
+    <loc>https://www.scottguymer.co.uk/tags/</loc>
     <priority>0</priority>
   </url>
   

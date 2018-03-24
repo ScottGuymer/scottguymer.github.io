@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About Scott on Scott Guymer</title>
-    <link>https://scottguymer.github.io/about/</link>
+    <link>https://www.scottguymer.co.uk/about/</link>
     <description>Recent content in About Scott on Scott Guymer</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language>
+    <language>en-us</language>
     <lastBuildDate>Wed, 09 Apr 2014 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://scottguymer.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.scottguymer.co.uk/about/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
