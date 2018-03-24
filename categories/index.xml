@@ -7,55 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 12 Mar 2018 10:53:21 +0000</lastBuildDate>
     
 	<atom:link href="https://www.scottguymer.co.uk/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>C#</title>
-      <link>https://www.scottguymer.co.uk/categories/c#/</link>
-      <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/categories/c#/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Deployment</title>
-      <link>https://www.scottguymer.co.uk/categories/deployment/</link>
-      <pubDate>Sat, 24 Mar 2018 11:39:23 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/categories/deployment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linq</title>
-      <link>https://www.scottguymer.co.uk/categories/linq/</link>
-      <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/categories/linq/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Reading</title>
-      <link>https://www.scottguymer.co.uk/categories/reading/</link>
-      <pubDate>Fri, 09 Mar 2018 17:54:40 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/categories/reading/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Software Engineering</title>
-      <link>https://www.scottguymer.co.uk/categories/software-engineering/</link>
-      <pubDate>Fri, 09 Mar 2018 17:54:40 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/categories/software-engineering/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>
