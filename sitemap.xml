@@ -18,11 +18,6 @@
   </url>
   
   <url>
-    <loc>https://www.scottguymer.co.uk/archives/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.scottguymer.co.uk/blog/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
     <priority>0</priority>
@@ -38,8 +33,14 @@
   </url>
   
   <url>
-    <loc>https://www.scottguymer.co.uk/categories/deployment/</loc>
+    <loc>https://www.scottguymer.co.uk/tags/deployment/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/tags/reading/</loc>
+    <lastmod>2018-03-09T17:54:40+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -56,6 +57,12 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/software-engineering/</loc>
+    <lastmod>2018-03-09T17:54:40+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/categories/software-engineering/</loc>
     <lastmod>2018-03-09T17:54:40+00:00</lastmod>
     <priority>0</priority>
@@ -63,6 +70,7 @@
   
   <url>
     <loc>https://www.scottguymer.co.uk/tags/</loc>
+    <lastmod>2018-03-24T11:39:23+00:00</lastmod>
     <priority>0</priority>
   </url>
   

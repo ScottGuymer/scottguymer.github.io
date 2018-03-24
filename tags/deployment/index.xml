@@ -2,13 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Deployment on Scott Guymer</title>
-    <link>https://www.scottguymer.co.uk/categories/deployment/</link>
+    <link>https://www.scottguymer.co.uk/tags/deployment/</link>
     <description>Recent content in Deployment on Scott Guymer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
     <lastBuildDate>Sat, 24 Mar 2018 11:39:23 +0000</lastBuildDate>
     
-	<atom:link href="https://www.scottguymer.co.uk/categories/deployment/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.scottguymer.co.uk/tags/deployment/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
