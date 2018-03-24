@@ -275,27 +275,21 @@
 <p><a href="https://devcenter.heroku.com/articles/platform-api-reference#pipeline-coupling-info-by-app" title="query the pipeline couplings from the appId ">https://devcenter.heroku.com/articles/platform-api-reference#pipeline-coupling-info-by-app</a></p>
 
 <p>This looks something like this, with the addition of an Auth header.</p>
-
-<pre><code>$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/pipeline-couplings \
-  -H &quot;Accept: application/vnd.heroku+json; version=3&quot;
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -n https://api.heroku.com/apps/$APP_ID_OR_NAME/pipeline-couplings <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>	-H <span style="color:#e6db74">&#34;Accept: application/vnd.heroku+json; version=3&#34;</span></code></pre></div>
 <p>This returns the details of the coupling of the pipeline to the app like this</p>
-
-<pre><code>{
-  &quot;app&quot;: {
-    &quot;id&quot;: &quot;01234567-89ab-cdef-0123-456789abcdef&quot;
-  },
-  &quot;created_at&quot;: &quot;2012-01-01T12:00:00Z&quot;,
-  &quot;id&quot;: &quot;01234567-89ab-cdef-0123-456789abcdef&quot;,
-  &quot;pipeline&quot;: {
-    &quot;id&quot;: &quot;01234567-89ab-cdef-0123-456789abcdef&quot;
-  },
-  &quot;stage&quot;: &quot;production&quot;,
-  &quot;updated_at&quot;: &quot;2012-01-01T12:00:00Z&quot;
-}
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;app&#34;</span>: {
+  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;01234567-89ab-cdef-0123-456789abcdef&#34;</span>
+         },
+ <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2012-01-01T12:00:00Z&#34;</span>,
+ <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;01234567-89ab-cdef-0123-456789abcdef&#34;</span>,
+ <span style="color:#f92672">&#34;pipeline&#34;</span>: {
+  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;01234567-89ab-cdef-0123-456789abcdef&#34;</span>
+             },
+ <span style="color:#f92672">&#34;stage&#34;</span>: <span style="color:#e6db74">&#34;production&#34;</span>,
+ <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2012-01-01T12:00:00Z&#34;</span>
+}</code></pre></div>
 <p>This gives is the stage which will be our environment data.</p>
 
 <p>To do this we are able to insert another HTTP request into the logic app. It will make a request to the Heroku API using the app id received in the web-hook to get the pipeline information and attach it to each record when inserting into the db. This way we now have the application data and the pipeline that it is attached to. This logic app now has 3 steps but it was super simple to achieve this and is sill very easy to understand whats going on. The HTTP trigger is omitted from this picture is identical but we have added in another HTTP request step before saving to the DB. We have used the JSON schema to pull out the appid from the incoming JSON and pushed that in as a part of the HTTP request. We then append the body of the response to the document we insert, alongside the web-hook data.</p>
@@ -307,18 +301,15 @@
 <p>There seem to be a few more issues with the data that comes back from GitLab. Firstly there is no notion of an environment in the pipelines web-hook data. So its a little tricky to figure out what has been deployed and where. Through the teams that use it within our org there seems to be some loose naming conventions for pipeline stages that has allowed me to pull the data apart in processing and gain some insight into what has been deployed and where. The deploy stage is helpfully called <code>deploy</code> and each job is named using the basic schema of <code>deploy:environment</code> and although all the jobs show up in the data only the one that has actually been deployed will be marked as succeeded.</p>
 
 <p>Something like this</p>
-
-<pre><code>{
-    &quot;id&quot;: 467840,
-    &quot;stage&quot;: &quot;deploy&quot;,
-    &quot;name&quot;: &quot;deploy:uat&quot;,
-    &quot;status&quot;: &quot;success&quot;,
-    &quot;created_at&quot;: &quot;2018-03-24 09:50:30 UTC&quot;,
-    &quot;started_at&quot;: &quot;2018-03-24 09:54:05 UTC&quot;,
-    &quot;finished_at&quot;: &quot;2018-03-24 09:58:01 UTC&quot;,
-....
-</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+   <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">467840</span>,
+   <span style="color:#f92672">&#34;stage&#34;</span>: <span style="color:#e6db74">&#34;deploy&#34;</span>,
+   <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;deploy:uat&#34;</span>,
+   <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;success&#34;</span>,
+   <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2018-03-24 09:50:30 UTC&#34;</span>,
+   <span style="color:#f92672">&#34;started_at&#34;</span>: <span style="color:#e6db74">&#34;2018-03-24 09:54:05 UTC&#34;</span>,
+   <span style="color:#f92672">&#34;finished_at&#34;</span>: <span style="color:#e6db74">&#34;2018-03-24 09:58:01 UTC&#34;</span>,
+ <span style="color:#960050;background-color:#1e0010">...</span></code></pre></div>
 <p>I am able to transform this data later when processing it. So i can get the data that i need but it isn&rsquo;t perfect.</p>
 
 <h2 id="rationalising-the-data">Rationalising the data</h2>
