@@ -5,10 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>
-  Posts
-   | Scott Guymer
-</title>
+  <title>Scott Guymer</title>
 
   
   
@@ -108,7 +105,7 @@
     </div>
     
     
-  <header class="site-header">
+    <header class="site-header">
   <img class="avatar" src="https://www.scottguymer.co.uk/images/main/scottguymer.jpg" alt="Avatar">
   
   <h2 class="title">Scott Guymer</h2>
@@ -211,18 +208,42 @@
   </nav>
 </header>
 
-  <section class="main post-list">
-    <header class="list-header offscreen">
-      <h2 class="list-label">Posts List</h2>
-    </header>
     
-    
-      <p>There's nothing here.<br>Create an interesting post with the command:</p>
-      <p><code>$ hugo new post/hello-world.md</code></p>
-    
-    
-  </section>
-  <footer class="site-footer">
+    <div id="main">
+        <article class="main post-detail">
+          <header>
+              <div class="title">
+                  
+                      <h2><a href="https://www.scottguymer.co.uk/contact/">Contact</a></h2>
+                  
+                  
+              </div>
+          </header>
+            <div id="post-content">
+                
+                <div class="contact-container">
+                
+                  <form id="contact" action="//formspree.io/blog@scottguymer.co.uk" method="post" center width="300px">
+                
+                  <h4>Replies Typically Within 24 Hours.</h4>
+                  <fieldset>
+                   <input placeholder="Your Name" type="text" name="name" tabindex="1" required autofocus>
+                  </fieldset>
+                  <fieldset>
+                   <input placeholder="Your Email Address" type="email" name="email" tabindex="2" required>
+                  </fieldset>
+                  <fieldset>
+                   <textarea placeholder="Your Message" name="message" tabindex="3" required></textarea>
+                  </fieldset>
+                  <fieldset>
+                   <button name="submit" class="button" type="submit" id="contact-submit" tabindex="4">Submit</button>
+                  </fieldset>
+              </form>
+            </div>
+            </div>
+        </article>
+    </div>
+<footer class="site-footer">
   <p>© 2017-2018 Scott Guymer</p>
   <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
   
