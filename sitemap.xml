@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.scottguymer.co.uk/post/azurechallenge-leeds/</loc>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/post/aggregating-application-deployment-data/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
   </url>
@@ -23,6 +28,12 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/azure/</loc>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/tags/c#/</loc>
     <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
@@ -30,6 +41,12 @@
   
   <url>
     <loc>https://www.scottguymer.co.uk/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/categories/category/</loc>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -44,6 +61,12 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/kubernetes/</loc>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/tags/linq/</loc>
     <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
@@ -51,7 +74,7 @@
   
   <url>
     <loc>https://www.scottguymer.co.uk/post/</loc>
-    <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -63,7 +86,7 @@
   
   <url>
     <loc>https://www.scottguymer.co.uk/</loc>
-    <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -74,8 +97,14 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/categories/subcategory/</loc>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/tags/</loc>
-    <lastmod>2018-03-12T10:53:21+00:00</lastmod>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Azure on Scott Guymer</title>
+    <link>https://www.scottguymer.co.uk/tags/azure/</link>
+    <description>Recent content in Azure on Scott Guymer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
+    <lastBuildDate>Thu, 29 Mar 2018 13:27:50 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.scottguymer.co.uk/tags/azure/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AzureChallenge Leeds</title>
+      <link>https://www.scottguymer.co.uk/post/azurechallenge-leeds/</link>
+      <pubDate>Thu, 29 Mar 2018 13:27:50 +0000</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/post/azurechallenge-leeds/</guid>
+      <description>This week I attended the Azure Challenge in Leeds hosted by Microsoft at the Hilton Leeds City. This was a 2 day event focussing on Kubernetes in Azure. There was very little information about the format and content and it felt like it was being kept under wraps!
+The only info we were given was
+  Install the Azure CLI 2.0 Install Docker Install Kubectl Install Postman - this is optional but useful   I arrived a bit late and sat down with Team 8 that consisted of Lee Dyche, Paul Latham and David Betteridge.</description>
+    </item>
+    
+  </channel>
+</rss>
