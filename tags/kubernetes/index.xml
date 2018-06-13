@@ -18,8 +18,8 @@
       <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
       
       <guid>https://www.scottguymer.co.uk/post/application-insight-in-a-cloud-native-world/</guid>
-      <description>APM products aren&amp;rsquo;t part of your solution they are part of your problem
- Don&amp;rsquo;t get me wrong they are for the most part great products and they do absolutely serve a purpose. But as we move towards a much more distributed world with lots of smaller interconnected applications that are frequently updated and dynamically scaled I&amp;rsquo;m not sure that these traditional products are the solution. Certainly not in the product format they are in currently where you pay per &amp;ldquo;host&amp;rdquo; or &amp;ldquo;agent&amp;rdquo;.</description>
+      <description>APM products aren&amp;rsquo;t part of your solution - they are part of your problem
+ Don&amp;rsquo;t get me wrong - they are for the most part great products and they do absolutely serve a purpose. But, as we move towards a much more distributed world with lots of smaller interconnected applications that are frequently updated and dynamically scaled, I&amp;rsquo;m not sure that these traditional products are the solution. Certainly not in the product format they are in currently where you pay per &amp;ldquo;host&amp;rdquo; or &amp;ldquo;agent&amp;rdquo;.</description>
     </item>
     
     <item>
