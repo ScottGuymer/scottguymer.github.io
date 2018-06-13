@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>https://www.scottguymer.co.uk/post/monitoring-in-a-cloud-native-world/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.scottguymer.co.uk/post/azurechallenge-leeds/</loc>
     <lastmod>2018-03-29T13:27:50+00:00</lastmod>
   </url>
@@ -71,14 +66,8 @@
   </url>
   
   <url>
-    <loc>https://www.scottguymer.co.uk/tags/instrumentation/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.scottguymer.co.uk/tags/kubernetes/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
+    <lastmod>2018-03-29T13:27:50+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -89,26 +78,8 @@
   </url>
   
   <url>
-    <loc>https://www.scottguymer.co.uk/tags/monitoring/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.scottguymer.co.uk/tags/opentracing/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://www.scottguymer.co.uk/post/</loc>
     <lastmod>2018-06-13T15:44:05+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.scottguymer.co.uk/tags/prometheus/</loc>
-    <lastmod>2018-06-13T13:51:05+00:00</lastmod>
     <priority>0</priority>
   </url>
   

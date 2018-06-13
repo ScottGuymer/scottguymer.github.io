@@ -40,18 +40,9 @@
     </item>
     
     <item>
-      <title>Instrumentation</title>
-      <link>https://www.scottguymer.co.uk/tags/instrumentation/</link>
-      <pubDate>Wed, 13 Jun 2018 13:51:05 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/tags/instrumentation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Kubernetes</title>
       <link>https://www.scottguymer.co.uk/tags/kubernetes/</link>
-      <pubDate>Wed, 13 Jun 2018 13:51:05 +0000</pubDate>
+      <pubDate>Thu, 29 Mar 2018 13:27:50 +0000</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/kubernetes/</guid>
       <description></description>
@@ -63,33 +54,6 @@
       <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/linq/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Monitoring</title>
-      <link>https://www.scottguymer.co.uk/tags/monitoring/</link>
-      <pubDate>Wed, 13 Jun 2018 13:51:05 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/tags/monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Opentracing</title>
-      <link>https://www.scottguymer.co.uk/tags/opentracing/</link>
-      <pubDate>Wed, 13 Jun 2018 13:51:05 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/tags/opentracing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prometheus</title>
-      <link>https://www.scottguymer.co.uk/tags/prometheus/</link>
-      <pubDate>Wed, 13 Jun 2018 13:51:05 +0000</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/tags/prometheus/</guid>
       <description></description>
     </item>
     
