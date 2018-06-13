@@ -111,5 +111,23 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Tag1</title>
+      <link>https://www.scottguymer.co.uk/tags/tag1/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/tag1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tag2</title>
+      <link>https://www.scottguymer.co.uk/tags/tag2/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/tag2/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
