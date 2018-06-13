@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Thu, 29 Mar 2018 13:27:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 13 Jun 2018 15:44:05 +0100</lastBuildDate>
     
 	<atom:link href="https://www.scottguymer.co.uk/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Application Insight</title>
+      <link>https://www.scottguymer.co.uk/tags/application-insight/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/application-insight/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Azure</title>
@@ -42,7 +51,7 @@
     <item>
       <title>Kubernetes</title>
       <link>https://www.scottguymer.co.uk/tags/kubernetes/</link>
-      <pubDate>Thu, 29 Mar 2018 13:27:50 +0000</pubDate>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/kubernetes/</guid>
       <description></description>
@@ -54,6 +63,42 @@
       <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/linq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Logging</title>
+      <link>https://www.scottguymer.co.uk/tags/logging/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/logging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monitoring</title>
+      <link>https://www.scottguymer.co.uk/tags/monitoring/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Opentracing</title>
+      <link>https://www.scottguymer.co.uk/tags/opentracing/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/opentracing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus</title>
+      <link>https://www.scottguymer.co.uk/tags/prometheus/</link>
+      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/prometheus/</guid>
       <description></description>
     </item>
     
@@ -76,20 +121,11 @@
     </item>
     
     <item>
-      <title>Tag1</title>
-      <link>https://www.scottguymer.co.uk/tags/tag1/</link>
+      <title>Tracing</title>
+      <link>https://www.scottguymer.co.uk/tags/tracing/</link>
       <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
       
-      <guid>https://www.scottguymer.co.uk/tags/tag1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tag2</title>
-      <link>https://www.scottguymer.co.uk/tags/tag2/</link>
-      <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/tags/tag2/</guid>
+      <guid>https://www.scottguymer.co.uk/tags/tracing/</guid>
       <description></description>
     </item>
     
