@@ -40,7 +40,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
 
 
 
-<meta name="generator" content="Hugo 0.31.1" />
+<meta name="generator" content="Hugo 0.42.1" />
 
 
 <link rel="canonical" href="https://www.scottguymer.co.uk/post/making-linq-testable-in-isolation/" />
@@ -263,7 +263,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
     {
         <span style="color:#66d9ef">public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
         {
-          <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">objects</span>.Where(x =&gt; <span style="color:#a6e22e">x</span>.Published);
+          <span style="color:#66d9ef">return</span> objects.Where(x =&gt; x.Published);
         }
     }</code></pre></div>
 <p>This seems pretty simple and you might be wondering what the point it. So now we move on to an example of how we might test this LINQ in isolation from any other code it might execute within. You can see from the test below that we create a list of test data, then instantiate the subject under test and execute the <code>Run()</code> method. We can then perform any assertions we want about the result, checking the size of the returned set or even the contents themselves. We can have as many tests as we need to test the functionality of the LINQ query.</p>
@@ -279,7 +279,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
             
             <span style="color:#66d9ef">var</span> selector = <span style="color:#66d9ef">new</span> ExampleQuery();
             
-            <span style="color:#66d9ef">var</span> result = <span style="color:#a6e22e">selector</span>.run(<span style="color:#a6e22e">data</span>.AsQueryable());
+            <span style="color:#66d9ef">var</span> result = selector.run(data.AsQueryable());
             
             <span style="color:#75715e">// assert things about the collection here
 </span><span style="color:#75715e"></span>        }
@@ -295,7 +295,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
         {
             <span style="color:#66d9ef">var</span> selector = <span style="color:#66d9ef">new</span> ExampleQuery();
             
-            <span style="color:#66d9ef">var</span> result = <span style="color:#a6e22e">selector</span>.run(<span style="color:#a6e22e">db</span>.myTable);
+            <span style="color:#66d9ef">var</span> result = selector.run(db.myTable);
         }
     }</code></pre></div>
 <p>Ok so thats pretty strightforward you might say. What about if i need to be able to influence the result with some sort of variable. Taking the posts example above we might want to filter by all posts published after a certain date. We can extend our implementation of <code>ISelect</code> further by introducing the concept of parameters that can be used to influence the query. These parameters are passed as part of a constructor and are kept private inside the implementation to prevent any unwanted behaviour. You can see below we pass in a <code>DateTime</code> and use this as part of the where clause in our LINQ statement.</p>
@@ -312,7 +312,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
 
 	<span style="color:#66d9ef">public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
 	{
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">objects</span>.Where(x =&gt; <span style="color:#a6e22e">x</span>.PublishedDate &gt; StartDate);
+		<span style="color:#66d9ef">return</span> objects.Where(x =&gt; x.PublishedDate &gt; StartDate);
 	}
 }</code></pre></div>
 <p>This isnt just useful on legacy code. It can be a very handy pattern to start out with in your code base. Each and every LINQ statement you use in your code can use this pattern.</p>
@@ -330,7 +330,7 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
       </ul>
       
       <p class="post-copyright">
-        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>165</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
       </p>
     </footer>
     
@@ -393,11 +393,15 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-113812052-1', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-113812052-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 
