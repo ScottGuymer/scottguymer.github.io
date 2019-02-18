@@ -33,6 +33,16 @@ Compared to some conferences it was a simple single track conference that consis
     </item>
     
     <item>
+      <title>Docker as a build system - with Windows containers</title>
+      <link>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</link>
+      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</guid>
+      <description>Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
+ Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general.</description>
+    </item>
+    
+    <item>
       <title>Application Insight in a cloud native world</title>
       <link>https://www.scottguymer.co.uk/post/application-insight-in-a-cloud-native-world/</link>
       <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>

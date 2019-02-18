@@ -13,6 +13,11 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</loc>
+    <lastmod>2018-06-14T20:09:50+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/post/application-insight-in-a-cloud-native-world/</loc>
     <lastmod>2018-06-13T15:44:05+01:00</lastmod>
   </url>
@@ -55,6 +60,12 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/build/</loc>
+    <lastmod>2018-06-14T20:09:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/tags/c#/</loc>
     <lastmod>2018-03-12T10:53:21+00:00</lastmod>
     <priority>0</priority>
@@ -82,8 +93,20 @@
   </url>
   
   <url>
+    <loc>https://www.scottguymer.co.uk/tags/containers/</loc>
+    <lastmod>2018-06-14T20:09:50+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.scottguymer.co.uk/tags/deployment/</loc>
     <lastmod>2018-03-24T11:39:23+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/tags/docker/</loc>
+    <lastmod>2018-06-14T20:09:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -168,6 +191,12 @@
   <url>
     <loc>https://www.scottguymer.co.uk/tags/tracing/</loc>
     <lastmod>2018-06-13T15:44:05+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.scottguymer.co.uk/tags/windows/</loc>
+    <lastmod>2018-06-14T20:09:50+01:00</lastmod>
     <priority>0</priority>
   </url>
   

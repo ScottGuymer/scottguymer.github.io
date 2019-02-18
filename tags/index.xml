@@ -31,6 +31,15 @@
     </item>
     
     <item>
+      <title>Build</title>
+      <link>https://www.scottguymer.co.uk/tags/build/</link>
+      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/build/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>C#</title>
       <link>https://www.scottguymer.co.uk/tags/c#/</link>
       <pubDate>Mon, 12 Mar 2018 10:53:21 +0000</pubDate>
@@ -49,11 +58,29 @@
     </item>
     
     <item>
+      <title>Containers</title>
+      <link>https://www.scottguymer.co.uk/tags/containers/</link>
+      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Deployment</title>
       <link>https://www.scottguymer.co.uk/tags/deployment/</link>
       <pubDate>Sat, 24 Mar 2018 11:39:23 +0000</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/deployment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://www.scottguymer.co.uk/tags/docker/</link>
+      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/docker/</guid>
       <description></description>
     </item>
     
@@ -144,6 +171,15 @@
       <pubDate>Wed, 13 Jun 2018 15:44:05 +0100</pubDate>
       
       <guid>https://www.scottguymer.co.uk/tags/tracing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://www.scottguymer.co.uk/tags/windows/</link>
+      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/tags/windows/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>Docker as a build system - with Windows containers</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Scott Guymer" />
+  <meta name="description" content="Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
+ Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general." />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@mr_scottguymer" />
+    <meta name="twitter:title" content="Docker as a build system - with Windows containers" />
+    <meta name="twitter:description" content="Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
+ Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general." />
+    <meta name="twitter:image" content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Docker as a build system - with Windows containers" />
+  <meta property="og:description" content="Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
+ Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general." />
+  <meta property="og:url" content="https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/" />
+  <meta property="og:image" content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png" />
+
+
+
+
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<link rel="canonical" href="https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/" />
+<link rel="alternative" href="https://www.scottguymer.co.uk/index.xml" title="Scott Guymer" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+<meta name="google-site-verification" content="Rop88G3o4ZxIlfG_B3VHOKboh8LM_UpKZTB1d1CTbIE" />
+
+
+
+
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://www.scottguymer.co.uk/apple-touch-icon-57x57.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="60x60" href="https://www.scottguymer.co.uk/apple-touch-icon-60x60.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="72x72" href="https://www.scottguymer.co.uk/apple-touch-icon-72x72.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="76x76" href="https://www.scottguymer.co.uk/apple-touch-icon-76x76.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="114x114" href="https://www.scottguymer.co.uk/apple-touch-icon-114x114.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="120x120" href="https://www.scottguymer.co.uk/apple-touch-icon-120x120.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="144x144" href="https://www.scottguymer.co.uk/apple-touch-icon-144x144.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="152x152" href="https://www.scottguymer.co.uk/apple-touch-icon-152x152.png?v=wAOKYnNQj4">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png?v=wAOKYnNQj4">
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.scottguymer.co.uk/favicon-32x32.png?v=wAOKYnNQj4">
+<link rel="icon" type="image/png" sizes="16x16" href="https://www.scottguymer.co.uk/favicon-16x16.png?v=wAOKYnNQj4">
+<link rel="manifest" href="https://www.scottguymer.co.uk/site.webmanifest?v=wAOKYnNQj4">
+<link rel="mask-icon" href="https://www.scottguymer.co.uk/safari-pinned-tab.svg?v=wAOKYnNQj4" color="#5bbad5">
+<link rel="shortcut icon" href="https://www.scottguymer.co.uk/favicon.ico?v=wAOKYnNQj4">
+<meta name="msapplication-TileColor" content="#2b5797">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=wAOKYnNQj4">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="https://www.scottguymer.co.uk/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+        <a title="Go to comments" class="to-comment" href="#disqus_thread"><span class="icon icon-comment"></span></a>
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="https://www.scottguymer.co.uk/images/main/scottguymer.jpg" alt="Avatar">
+  
+  <h2 class="title">Scott Guymer</h2>
+  
+  <p class="subtitle">~ Software Engineer ~</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="https://www.scottguymer.co.uk/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://www.scottguymer.co.uk/tags/">Tags</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://www.scottguymer.co.uk/about/">About</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+      <li class="social-item">
+        <a href="mailto:blog@scottguymer.co.uk" title="Email"><span class="icon icon-email"></span></a>
+      </li>
+
+      
+      <li class="social-item">
+        <a href="//github.com/scottguymer" title="GitHub"><span class="icon icon-github"></span></a>
+      </li>
+
+      <li class="social-item">
+        <a href="//twitter.com/mr_scottguymer" title="Twitter"><span class="icon icon-twitter"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="//www.linkedin.com/in/scottguymer" title="Linkedin"><span class="icon icon-linkedin"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="https://www.scottguymer.co.uk/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">Docker as a build system - with Windows containers</h1>
+      <p class="post-meta">@Scott Guymer · Jun 14, 2018 · 5 min read</p>
+    </header>
+    <article class="post-content"><blockquote>
+<p>Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.</p>
+</blockquote>
+
+<p>Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general.</p>
+
+<p>Because we can start with a base image and describe the steps to get our application build including explicitly stating or installing any dependencies we have great control and knowledge of what are application truely needs to be built correctly. We can also leverage dockers layering and change detection to make our builds faster.</p>
+
+<p>In this example im going to build a windows forms application that we would expect to use on a local desktop and not from running the image itself. In this case the applicaiton is trivial and is just a button that increments a counter each time you click it.</p>
+
+<p><img src="https://api.media.atlassian.com/file/bc3cf4f1-0baf-4444-a8b3-07f11f8d0b3b/artifact/image.jpg/binary?client=d869b65a-5c7c-4760-886d-1d80b45237f0&amp;collection=contentId-747536502&amp;max-age=3600&amp;token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkODY5YjY1YS01YzdjLTQ3NjAtODg2ZC0xZDgwYjQ1MjM3ZjAiLCJhY2Nlc3MiOnsidXJuOmZpbGVzdG9yZTpjb2xsZWN0aW9uOmNvbnRlbnRJZC03NDc1MzY1MDIiOlsicmVhZCJdfSwiZXhwIjoxNTUwNDgzMDM4LCJuYmYiOjE1NTA0ODAwOTh9.NRDUvwulOx4gSF-QXOm6yfbmDRFTA4cxrTZcFRKZuIY" alt="image-20190215-100407.png" title="clicker.exe" />You can see the end result… Its not pretty but it works!</p>
+
+<p>To start with we have a simple solution to build this application locally on our machine and everything works as expected. When we run the application it starts and we can click the button like crazy.</p>
+
+<p>Now we have to think about getting this built inside a docker image. To start with we will need a base image with all the tools in that we need to be able to build a winforms app. This includes msbuild and various other tools. Instead of building this myself for simplicity I found one that will do the job on DockerHub. Youc an take a look at it here <a href="https://hub.docker.com/r/compulim/msbuild/">https://hub.docker.com/r/compulim/msbuild/</a> and the great thing about DockerHub is that most of the images are open sourece and you can usually find dockerfile that was used to create that image so you can inspect it for any funny stuff yourself. The repository for this one is on GitHub here <a href="https://github.com/compulim/docker-msbuild">https://github.com/compulim/docker-msbuild</a></p>
+
+<p>The next task is to create a new dockerfile and add the steps needed to get the application build inside the container.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> compulim/msbuild</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> c:\\code</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ADD</span><span style="color:#e6db74"> clicker .</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> msbuild clicker.sln /p:Configuration<span style="color:#f92672">=</span>Debug /p:Platform<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Any CPU&#34;</span></code></pre></div>
+<p>This all looks pretty simple. We base our image on the msbuild one using the FROM directive, this means we are using that one as a starting point for our image. We then set a working directory using WORKDIR(this is optional but mean you are explicit about where things are going.) Next we simply ADD the code from our local disk into the docker image itself. And finally we direct the docker engine to RUNa command inside the docker image. This command will build the project we added and the output will be stored in the docker image.</p>
+
+<p>We can get tht docker engine to build our docker image using the following command</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t winforms .</code></pre></div>
+<p>The first time we run this it will have to pull the image down from DockerHub which because windows images are very large can take some time. This only happens the first time. It will then start to run the instructions from the dockerfile above.</p>
+
+<p>The result you get in the command line will look something like this</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Successfully built 327e142a1ac3
+Successfully tagged winforms:latest</code></pre></div>
+<p>This results in a new image being created and stored on your local machine. You can see this by running docker images which will give you a list of the images available on your machine. You will notice that there are at least 2. The image we based everything on and your brand new image that we just built.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">REPOSITORY                             TAG                 IMAGE ID            CREATED             SIZE
+winforms                               latest              327e142a1ac3        <span style="color:#ae81ff">3</span> minutes ago       <span style="color:#ae81ff">13</span>.9GB
+compulim/msbuild                       latest              5f5eb49a0f18        <span style="color:#ae81ff">16</span> months ago       <span style="color:#ae81ff">13</span>.8GB</code></pre></div>
+<p>At the moment the exe that we just built is stuck inside your image which doesnt do us much good. Here is where the neat trick happens. Using docker we can create a new container from our image without starting it and then reach into that container and copy files back to our local system. The commands look like this.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t winforms .
+
+<span style="color:#75715e"># create a new instance of our winforms image without starting it
+</span><span style="color:#75715e"></span>docker create --name build winforms
+
+<span style="color:#75715e"># copy clicker.exe out of the container into our local filesystem
+</span><span style="color:#75715e"></span>docker cp build:c:<span style="color:#ae81ff">\c</span>ode<span style="color:#ae81ff">\b</span>in<span style="color:#ae81ff">\D</span>ebug<span style="color:#ae81ff">\c</span>licker.exe .
+
+<span style="color:#75715e"># clean up my removing the container we created
+</span><span style="color:#75715e"></span>docker rm build</code></pre></div>
+<p>We now have the exe file locally and we can distribute it however we choose.</p>
+
+<p>The benefit here is having a full description of the build environment that developers can reproduce locally and run the exact same build as the build system might do. We can include any dependencies or extra steps required as part of the build in the dockerfile and the beauty of this approach is that if those steps dont need re-running due to changes they simply wont be.</p>
+
+<p>We can also use the image inheritence to our advantage by creating base images that contain and shared dependencies such as tooling or frameworks. And with careful ordering of the commands we can use the docker layers to ensure that work that has not triggered changes does not get done again.</p>
+
+<p>In future I will show you other tricks such as how to use docker-compose as part of your development workflow and how to mount local code into a running container to have greated control of your local environments.</p>
+
+<p><a href="https://github.com/ScottGuymer/docker-build-for-windows-apps">The source code for this post is avilable on GitHub here</a></p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="https://www.scottguymer.co.uk/tags/docker"><span class="tag">Docker</span></a></li>
+        
+          <li><a href="https://www.scottguymer.co.uk/tags/windows"><span class="tag">Windows</span></a></li>
+        
+          <li><a href="https://www.scottguymer.co.uk/tags/containers"><span class="tag">Containers</span></a></li>
+        
+          <li><a href="https://www.scottguymer.co.uk/tags/build"><span class="tag">Build</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>248</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
+      </p>
+    </footer>
+    
+      <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "scottguymer" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2019 Scott Guymer</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="https://www.scottguymer.co.uk/js/bundle.js"></script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-113812052-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+  </body>
+</html>
