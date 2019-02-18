@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Fri, 24 Aug 2018 16:17:23 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 18 Feb 2019 09:01:50 +0100</lastBuildDate>
     
 	<atom:link href="https://www.scottguymer.co.uk/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker as a build system - with Windows containers</title>
+      <link>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</link>
+      <pubDate>Mon, 18 Feb 2019 09:01:50 +0100</pubDate>
+      
+      <guid>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</guid>
+      <description>Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
+ Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general.</description>
+    </item>
     
     <item>
       <title>Kubernetes Mutating Webhook Configuration</title>
@@ -30,16 +40,6 @@ With a Mutating Webhook Configuration you can do this. Essentially you can subsc
       <guid>https://www.scottguymer.co.uk/post/cloudflare--internetsummit/</guid>
       <description>I only use Cloudflare for this blog so you can imagine I was quite surprised when I got an invite to their first European #internetSummit hosted in London. I signed right up and was pretty curious about the topics.
 Compared to some conferences it was a simple single track conference that consisted entirely of panel discussions rather than your more traditional speaker/talk arrangement. This is by no means a bad thing at all.</description>
-    </item>
-    
-    <item>
-      <title>Docker as a build system - with Windows containers</title>
-      <link>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</link>
-      <pubDate>Thu, 14 Jun 2018 20:09:50 +0100</pubDate>
-      
-      <guid>https://www.scottguymer.co.uk/post/docker-as-a-build-system-windows/</guid>
-      <description>Whilst I am familiar with linux containers I havent had the chance to use windows containers much so this is part of a series where I explore the features and differences of windows container. These posts are written for someone who is fairly new to the docker experience.
- Docker doesnt just have to be used just to build, package and deploy applications. Its ability to provide an isolated environment that you have control over is great for build systems in general.</description>
     </item>
     
     <item>
