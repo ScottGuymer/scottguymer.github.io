@@ -1,373 +1,76 @@
-<!DOCTYPE html>
-<html lang="en-us">
-<head>
-
-  <meta charset="utf-8" />
-
-  
-  <title>Unit testing complex LINQ statements</title>
-
-  
-  
-
-
-
-
-
-  
-  <meta name="author" content="Scott Guymer" />
-  <meta name="description" content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
-It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10&#43; line LINQ statements dropped into the middle of large blocks of business logic." />
-
-  
-  
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@mr_scottguymer" />
-    <meta name="twitter:title" content="Unit testing complex LINQ statements" />
-    <meta name="twitter:description" content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
-It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10&#43; line LINQ statements dropped into the middle of large blocks of business logic." />
-    <meta name="twitter:image" content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png" />
-  
-
-  
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="Unit testing complex LINQ statements" />
-  <meta property="og:description" content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
-It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10&#43; line LINQ statements dropped into the middle of large blocks of business logic." />
-  <meta property="og:url" content="https://www.scottguymer.co.uk/post/making-linq-testable-in-isolation/" />
-  <meta property="og:image" content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png" />
-
-
-
-
-<meta name="generator" content="Hugo 0.42.1" />
-
-
-<link rel="canonical" href="https://www.scottguymer.co.uk/post/making-linq-testable-in-isolation/" />
-<link rel="alternative" href="https://www.scottguymer.co.uk/index.xml" title="Scott Guymer" type="application/atom+xml" />
-
-
-<meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="format-detection" content="telephone=no,email=no,adress=no" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-
-
-<meta name="robots" content="index,follow" />
-<meta name="referrer" content="origin-when-cross-origin" />
-<meta name="google-site-verification" content="Rop88G3o4ZxIlfG_B3VHOKboh8LM_UpKZTB1d1CTbIE" />
-
-
-
-
-
-
-<link rel="apple-touch-icon" sizes="57x57" href="https://www.scottguymer.co.uk/apple-touch-icon-57x57.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="60x60" href="https://www.scottguymer.co.uk/apple-touch-icon-60x60.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="72x72" href="https://www.scottguymer.co.uk/apple-touch-icon-72x72.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="76x76" href="https://www.scottguymer.co.uk/apple-touch-icon-76x76.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="114x114" href="https://www.scottguymer.co.uk/apple-touch-icon-114x114.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="120x120" href="https://www.scottguymer.co.uk/apple-touch-icon-120x120.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="144x144" href="https://www.scottguymer.co.uk/apple-touch-icon-144x144.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="152x152" href="https://www.scottguymer.co.uk/apple-touch-icon-152x152.png?v=wAOKYnNQj4">
-<link rel="apple-touch-icon" sizes="180x180" href="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png?v=wAOKYnNQj4">
-<link rel="icon" type="image/png" sizes="32x32" href="https://www.scottguymer.co.uk/favicon-32x32.png?v=wAOKYnNQj4">
-<link rel="icon" type="image/png" sizes="16x16" href="https://www.scottguymer.co.uk/favicon-16x16.png?v=wAOKYnNQj4">
-<link rel="manifest" href="https://www.scottguymer.co.uk/site.webmanifest?v=wAOKYnNQj4">
-<link rel="mask-icon" href="https://www.scottguymer.co.uk/safari-pinned-tab.svg?v=wAOKYnNQj4" color="#5bbad5">
-<link rel="shortcut icon" href="https://www.scottguymer.co.uk/favicon.ico?v=wAOKYnNQj4">
-<meta name="msapplication-TileColor" content="#2b5797">
-<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=wAOKYnNQj4">
-<meta name="theme-color" content="#ffffff">
-
-
-
-<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
-
-<link rel="stylesheet" href="https://www.scottguymer.co.uk/css/bundle.css" />
-
-
-  
-  <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
-  <![endif]-->
-
-<!--[if lte IE 11]>
-    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
-  <![endif]-->
-
-
-<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
-
-
-<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
-
-
-</head>
-  <body>
+<!doctype html><html lang=en-us><head><meta charset=utf-8><title>Unit testing complex LINQ statements</title><meta name=author content="Scott Guymer"><meta name=description content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
+It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10+ line LINQ statements dropped into the middle of large blocks of business logic."><meta name=twitter:card content="summary"><meta name=twitter:site content="@mr_scottguymer"><meta name=twitter:title content="Unit testing complex LINQ statements"><meta name=twitter:description content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
+It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10+ line LINQ statements dropped into the middle of large blocks of business logic."><meta name=twitter:image content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png"><meta property="og:type" content="article"><meta property="og:title" content="Unit testing complex LINQ statements"><meta property="og:description" content="LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.
+It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10+ line LINQ statements dropped into the middle of large blocks of business logic."><meta property="og:url" content="https://www.scottguymer.co.uk/post/making-linq-testable-in-isolation/"><meta property="og:image" content="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png"><meta name=generator content="Hugo 0.64.0"><link rel=canonical href=https://www.scottguymer.co.uk/post/making-linq-testable-in-isolation/><link rel=alternative href=https://www.scottguymer.co.uk/index.xml title="Scott Guymer" type=application/atom+xml><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no,email=no,adress=no"><meta http-equiv=cache-control content="no-transform"><meta name=robots content="index,follow"><meta name=referrer content="origin-when-cross-origin"><meta name=google-site-verification content="Rop88G3o4ZxIlfG_B3VHOKboh8LM_UpKZTB1d1CTbIE"><link rel=apple-touch-icon sizes=57x57 href="https://www.scottguymer.co.uk/apple-touch-icon-57x57.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=60x60 href="https://www.scottguymer.co.uk/apple-touch-icon-60x60.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=72x72 href="https://www.scottguymer.co.uk/apple-touch-icon-72x72.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=76x76 href="https://www.scottguymer.co.uk/apple-touch-icon-76x76.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=114x114 href="https://www.scottguymer.co.uk/apple-touch-icon-114x114.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=120x120 href="https://www.scottguymer.co.uk/apple-touch-icon-120x120.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=144x144 href="https://www.scottguymer.co.uk/apple-touch-icon-144x144.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=152x152 href="https://www.scottguymer.co.uk/apple-touch-icon-152x152.png?v=wAOKYnNQj4"><link rel=apple-touch-icon sizes=180x180 href="https://www.scottguymer.co.uk/apple-touch-icon-180x180.png?v=wAOKYnNQj4"><link rel=icon type=image/png sizes=32x32 href="https://www.scottguymer.co.uk/favicon-32x32.png?v=wAOKYnNQj4"><link rel=icon type=image/png sizes=16x16 href="https://www.scottguymer.co.uk/favicon-16x16.png?v=wAOKYnNQj4"><link rel=manifest href="https://www.scottguymer.co.uk/site.webmanifest?v=wAOKYnNQj4"><link rel=mask-icon href="https://www.scottguymer.co.uk/safari-pinned-tab.svg?v=wAOKYnNQj4" color=#5bbad5><link rel="shortcut icon" href="https://www.scottguymer.co.uk/favicon.ico?v=wAOKYnNQj4"><meta name=msapplication-TileColor content="#2b5797"><meta name=msapplication-TileImage content="/mstile-144x144.png?v=wAOKYnNQj4"><meta name=theme-color content="#ffffff"><link rel=stylesheet href=//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css><link rel=stylesheet href=https://www.scottguymer.co.uk/css/bundle.css><!--[if lt IE 9]><script src=//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js></script><script src=//cdn.bootcss.com/respond.js/1.4.2/respond.min.js></script><script src=//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js></script><![endif]--><!--[if lte IE 11]><script src=//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js></script><![endif]--><script src=//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js></script><script src=//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js></script></head><body><div class=suspension><a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a><a title="Go to comments" class=to-comment href=#disqus_thread><span class="icon icon-comment"></span></a></div><header class=site-header><img class=avatar src=https://www.scottguymer.co.uk/images/main/scottguymer.jpg alt=Avatar><h2 class=title>Scott Guymer</h2><p class=subtitle>~ Software Engineer ~</p><button class=menu-toggle type=button>
+<span class="icon icon-menu"></span></button><nav class="site-menu collapsed"><h2 class=offscreen>Main Menu</h2><ul class=menu-list><li class="menu-item
+is-active"><a href=https://www.scottguymer.co.uk/>Home</a></li><li class=menu-item><a href=https://www.scottguymer.co.uk/tags/>Tags</a></li><li class=menu-item><a href=https://www.scottguymer.co.uk/about/>About</a></li></ul></nav><nav class="social-menu collapsed"><h2 class=offscreen>Social Networks</h2><ul class=social-list><li class=social-item><a href=mailto:blog@scottguymer.co.uk title=Email><span class="icon icon-email"></span></a></li><li class=social-item><a href=//github.com/scottguymer title=GitHub><span class="icon icon-github"></span></a></li><li class=social-item><a href=//twitter.com/mr_scottguymer title=Twitter><span class="icon icon-twitter"></span></a></li><li class=social-item><a href=//www.linkedin.com/in/scottguymer title=Linkedin><span class="icon icon-linkedin"></span></a></li><li class=social-item><a href=https://www.scottguymer.co.uk/index.xml><span class="icon icon-rss" title=RSS></span></a></li></ul></nav></header><section class="main post-detail"><header class=post-header><h1 class=post-title>Unit testing complex LINQ statements</h1><p class=post-meta>@Scott Guymer · Mar 12, 2018 · 5 min read</p></header><article class=post-content><p>LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.</p><p>It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10+ line LINQ statements dropped into the middle of large blocks of business logic. All without any unit tests or even many comments on what the statement actually does.</p><p>There is no way you are going to be able to make it any better without breaking it so you often just leave it! Who would want to risk touching that and breaking the complex stuff its doing.</p><p>The first thing you need to do is find some way of abstracting out the huge statement from the rest of the code sat around it and constructing some archeology style after the fact tests to test what you think it should do. You might then have a fighting change of making it more performant or even just a bit easier to understand!</p><h2 id=enter-the-iselect-pattern>Enter the ISelect Pattern!</h2><p><em>Disclaimer: I didn&rsquo;t come up with this myself I&rsquo;m not claiming ownership of this pattern. Its something I have picked up over the years and have found very useful.</em></p><p>I have found this pattern very useful for abstracting away complex LINQ statements you uncover in code. Of course it also useful when you are starting afresh an have a LINQ statement that you need to write and test.</p><p>The first thing we need to do is define an interface for all of our queries. This interface uses a fair bit of generics and basically allows you to define an implementation where the in and out types are fixed. It is built on the premise that you have an <code>IQueryable&lt;T></code> of elements that you want to operate on which forms the input of the <code>Run</code> method. You are then free to define what sort of type you want to return. It could be a single object or another <code>IList&lt;T></code> or even another <code>IQueryable&lt;T></code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    <span style=color:#66d9ef>using</span> System.Linq;
     
-    <div class="suspension">
-      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
-      
-        
-        <a title="Go to comments" class="to-comment" href="#disqus_thread"><span class="icon icon-comment"></span></a>
-        
-      
-    </div>
-    
-    
-  <header class="site-header">
-  <img class="avatar" src="https://www.scottguymer.co.uk/images/main/scottguymer.jpg" alt="Avatar">
-  
-  <h2 class="title">Scott Guymer</h2>
-  
-  <p class="subtitle">~ Software Engineer ~</p>
-  <button class="menu-toggle" type="button">
-    <span class="icon icon-menu"></span>
-  </button>
-  <nav class="site-menu collapsed">
-    <h2 class="offscreen">Main Menu</h2>
-    <ul class="menu-list">
-      
-      
-      
-      
-        <li class="menu-item
-            
-            
-            
-              is-active
-            ">
-            <a href="https://www.scottguymer.co.uk/">Home</a>
-          </li>
-      
-        <li class="menu-item
-            
-            
-            ">
-            <a href="https://www.scottguymer.co.uk/tags/">Tags</a>
-          </li>
-      
-        <li class="menu-item
-            
-            
-            ">
-            <a href="https://www.scottguymer.co.uk/about/">About</a>
-          </li>
-      
-    </ul>
-  </nav>
-  <nav class="social-menu collapsed">
-    <h2 class="offscreen">Social Networks</h2>
-    <ul class="social-list">
-
-      
-      <li class="social-item">
-        <a href="mailto:blog@scottguymer.co.uk" title="Email"><span class="icon icon-email"></span></a>
-      </li>
-
-      
-      <li class="social-item">
-        <a href="//github.com/scottguymer" title="GitHub"><span class="icon icon-github"></span></a>
-      </li>
-
-      <li class="social-item">
-        <a href="//twitter.com/mr_scottguymer" title="Twitter"><span class="icon icon-twitter"></span></a>
-      </li>
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <li class="social-item">
-        <a href="//www.linkedin.com/in/scottguymer" title="Linkedin"><span class="icon icon-linkedin"></span></a>
-      </li>
-
-      
-
-      
-
-      
-
-      <li class="social-item">
-        <a href="https://www.scottguymer.co.uk/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
-      </li>
-
-    </ul>
-  </nav>
-</header>
-
-  <section class="main post-detail">
-    <header class="post-header">
-      <h1 class="post-title">Unit testing complex LINQ statements</h1>
-      <p class="post-meta">@Scott Guymer · Mar 12, 2018 · 5 min read</p>
-    </header>
-    <article class="post-content">
-
-<p>LINQ is amongst the greatest features of c# and when it was released people instantly took to using it. It forms the basis of may ORMs and other object manipulation tools. It can form a great abstraction when loading and manipulating data.</p>
-
-<p>It can however like a lot of great tools be horrendously misused by a lot of people. I have seen 10+ line LINQ statements dropped into the middle of large blocks of business logic. All without any unit tests or even many comments on what the statement actually does.</p>
-
-<p>There is no way you are going to be able to make it any better without breaking it so you often just leave it! Who would want to risk touching that and breaking the complex stuff its doing.</p>
-
-<p>The first thing you need to do is find some way of abstracting out the huge statement from the rest of the code sat around it and constructing some archeology style after the fact tests to test what you think it should do. You might then have a fighting change of making it more performant or even just a bit easier to understand!</p>
-
-<h2 id="enter-the-iselect-pattern">Enter the ISelect Pattern!</h2>
-
-<p><em>Disclaimer: I didn&rsquo;t come up with this myself  I&rsquo;m not claiming ownership of this pattern. Its something I have picked up over the years and have found very useful.</em></p>
-
-<p>I have found this pattern very useful for abstracting away complex LINQ statements you uncover in code. Of course it also useful when you are starting afresh an have a LINQ statement that you need to write and test.</p>
-
-<p>The first thing we need to do is define an interface for all of our queries. This interface uses a fair bit of generics and basically allows you to define an implementation where the in and out types are fixed. It is built on the premise that you have an <code>IQueryable&lt;T&gt;</code> of elements that you want to operate on which forms the input of the <code>Run</code> method. You are then free to define what sort of type you want to return. It could be a single object or another <code>IList&lt;T&gt;</code> or even another <code>IQueryable&lt;T&gt;</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">using</span> System.Linq;
-    
-    <span style="color:#75715e">/// &lt;summary&gt;
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// An Interface to define a selector query that is used to return data from the database.
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;/summary&gt;
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;typeparam name=&#34;TIn&#34;&gt;The type of the input to the query.&lt;/typeparam&gt;
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">/// &lt;typeparam name=&#34;TOut&#34;&gt;The type of the output from the query.&lt;/typeparam&gt;
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> ISelect&lt;<span style="color:#66d9ef">in</span> TIn, <span style="color:#66d9ef">out</span> TOut&gt;
+    <span style=color:#75715e>/// &lt;summary&gt;
+</span><span style=color:#75715e></span>    <span style=color:#75715e>/// An Interface to define a selector query that is used to return data from the database.
+</span><span style=color:#75715e></span>    <span style=color:#75715e>/// &lt;/summary&gt;
+</span><span style=color:#75715e></span>    <span style=color:#75715e>/// &lt;typeparam name=&#34;TIn&#34;&gt;The type of the input to the query.&lt;/typeparam&gt;
+</span><span style=color:#75715e></span>    <span style=color:#75715e>/// &lt;typeparam name=&#34;TOut&#34;&gt;The type of the output from the query.&lt;/typeparam&gt;
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> ISelect&lt;<span style=color:#66d9ef>in</span> TIn, <span style=color:#66d9ef>out</span> TOut&gt;
     {
         TOut Run(IQueryable&lt;TIn&gt; objects);
-    }</code></pre></div>
-<p>So we now have an interface that we can use to define our query implementations. To do this we simply define a class that implements the interface <code>ISelect&lt;in TIn, out TOut&gt;</code> as simple example of this is below. Where we are expecting a collection of posts in an a filtered collection of posts returned.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">using</span> System.Linq;
+    }
+</code></pre></div><p>So we now have an interface that we can use to define our query implementations. To do this we simply define a class that implements the interface <code>ISelect&lt;in TIn, out TOut></code> as simple example of this is below. Where we are expecting a collection of posts in an a filtered collection of posts returned.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    <span style=color:#66d9ef>using</span> System.Linq;
     
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExampleQuery</span> : ISelect&lt;<span style="color:#66d9ef">in</span> Post, <span style="color:#66d9ef">out</span> IEnumerable&lt;Post&gt;&gt;
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExampleQuery</span> : ISelect&lt;<span style=color:#66d9ef>in</span> Post, <span style=color:#66d9ef>out</span> IEnumerable&lt;Post&gt;&gt;
     {
-        <span style="color:#66d9ef">public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
+        <span style=color:#66d9ef>public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
         {
-          <span style="color:#66d9ef">return</span> objects.Where(x =&gt; x.Published);
+          <span style=color:#66d9ef>return</span> objects.Where(x =&gt; x.Published);
         }
-    }</code></pre></div>
-<p>This seems pretty simple and you might be wondering what the point it. So now we move on to an example of how we might test this LINQ in isolation from any other code it might execute within. You can see from the test below that we create a list of test data, then instantiate the subject under test and execute the <code>Run()</code> method. We can then perform any assertions we want about the result, checking the size of the returned set or even the contents themselves. We can have as many tests as we need to test the functionality of the LINQ query.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">using</span> System.Linq;<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">    
-</span><span style="color:#a6e22e">    [TestFixture]</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TestASelector</span>
-    {<span style="color:#a6e22e">
-</span><span style="color:#a6e22e">        [Test]</span>
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> TestSelector()
-        {
-            <span style="color:#66d9ef">var</span> data = <span style="color:#66d9ef">new</span> List&lt;Post&gt; { <span style="color:#66d9ef">new</span> Post() { Published = <span style="color:#66d9ef">true</span> } };
-            
-            <span style="color:#66d9ef">var</span> selector = <span style="color:#66d9ef">new</span> ExampleQuery();
-            
-            <span style="color:#66d9ef">var</span> result = selector.run(data.AsQueryable());
-            
-            <span style="color:#75715e">// assert things about the collection here
-</span><span style="color:#75715e"></span>        }
-    }</code></pre></div>
-<p>Because the <code>ISelect</code> implementation doesnt retain any state we can quite easily slot it into any code that we might need to wrap it in. Below is an example of how we would run our selector within a piece of code that may have some logic either side of the selector. You can see in this example we are pumping a table from a Entity Framework DBContext into the run method. This could quite easily be any other ORM or even just a collection of POCO objects.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">    <span style="color:#66d9ef">using</span> System.Linq;
-    
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UseASelector</span>
+    }
+</code></pre></div><p>This seems pretty simple and you might be wondering what the point it. So now we move on to an example of how we might test this LINQ in isolation from any other code it might execute within. You can see from the test below that we create a list of test data, then instantiate the subject under test and execute the <code>Run()</code> method. We can then perform any assertions we want about the result, checking the size of the returned set or even the contents themselves. We can have as many tests as we need to test the functionality of the LINQ query.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    <span style=color:#66d9ef>using</span> System.Linq;
+<span style=color:#a6e22e>    
+</span><span style=color:#a6e22e>    [TestFixture]</span>
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TestASelector</span>
     {
-        <span style="color:#66d9ef">private</span> DBContext db;
+<span style=color:#a6e22e>        [Test]</span>
+        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> TestSelector()
+        {
+            <span style=color:#66d9ef>var</span> data = <span style=color:#66d9ef>new</span> List&lt;Post&gt; { <span style=color:#66d9ef>new</span> Post() { Published = <span style=color:#66d9ef>true</span> } };
+            
+            <span style=color:#66d9ef>var</span> selector = <span style=color:#66d9ef>new</span> ExampleQuery();
+            
+            <span style=color:#66d9ef>var</span> result = selector.run(data.AsQueryable());
+            
+            <span style=color:#75715e>// assert things about the collection here
+</span><span style=color:#75715e></span>        }
+    }
+</code></pre></div><p>Because the <code>ISelect</code> implementation doesnt retain any state we can quite easily slot it into any code that we might need to wrap it in. Below is an example of how we would run our selector within a piece of code that may have some logic either side of the selector. You can see in this example we are pumping a table from a Entity Framework DBContext into the run method. This could quite easily be any other ORM or even just a collection of POCO objects.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    <span style=color:#66d9ef>using</span> System.Linq;
+    
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>UseASelector</span>
+    {
+        <span style=color:#66d9ef>private</span> DBContext db;
         
-        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> DoWork()
+        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> DoWork()
         {
-            <span style="color:#66d9ef">var</span> selector = <span style="color:#66d9ef">new</span> ExampleQuery();
+            <span style=color:#66d9ef>var</span> selector = <span style=color:#66d9ef>new</span> ExampleQuery();
             
-            <span style="color:#66d9ef">var</span> result = selector.run(db.myTable);
+            <span style=color:#66d9ef>var</span> result = selector.run(db.myTable);
         }
-    }</code></pre></div>
-<p>Ok so thats pretty strightforward you might say. What about if i need to be able to influence the result with some sort of variable. Taking the posts example above we might want to filter by all posts published after a certain date. We can extend our implementation of <code>ISelect</code> further by introducing the concept of parameters that can be used to influence the query. These parameters are passed as part of a constructor and are kept private inside the implementation to prevent any unwanted behaviour. You can see below we pass in a <code>DateTime</code> and use this as part of the where clause in our LINQ statement.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System.Linq;
+    }
+</code></pre></div><p>Ok so thats pretty strightforward you might say. What about if i need to be able to influence the result with some sort of variable. Taking the posts example above we might want to filter by all posts published after a certain date. We can extend our implementation of <code>ISelect</code> further by introducing the concept of parameters that can be used to influence the query. These parameters are passed as part of a constructor and are kept private inside the implementation to prevent any unwanted behaviour. You can see below we pass in a <code>DateTime</code> and use this as part of the where clause in our LINQ statement.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>using</span> System.Linq;
 
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExampleQueryWithParams</span> : ISelect&lt;<span style="color:#66d9ef">in</span> Post, <span style="color:#66d9ef">out</span> IEnumerable&lt;Post&gt;&gt;
+<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExampleQueryWithParams</span> : ISelect&lt;<span style=color:#66d9ef>in</span> Post, <span style=color:#66d9ef>out</span> IEnumerable&lt;Post&gt;&gt;
 {
-	<span style="color:#66d9ef">private</span> DateTime startDate;
+	<span style=color:#66d9ef>private</span> DateTime startDate;
 
-	<span style="color:#66d9ef">public</span> ExampleQueryWithParams(DateTime startDate)
+	<span style=color:#66d9ef>public</span> ExampleQueryWithParams(DateTime startDate)
 	{
-		<span style="color:#66d9ef">this</span>.startDate = startDate;
+		<span style=color:#66d9ef>this</span>.startDate = startDate;
 	}
 
-	<span style="color:#66d9ef">public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
+	<span style=color:#66d9ef>public</span> IEnumerable&lt;Post&gt; Run(IQueryable&lt;Post&gt; objects)
 	{
-		<span style="color:#66d9ef">return</span> objects.Where(x =&gt; x.PublishedDate &gt; StartDate);
+		<span style=color:#66d9ef>return</span> objects.Where(x =&gt; x.PublishedDate &gt; StartDate);
 	}
-}</code></pre></div>
-<p>This isnt just useful on legacy code. It can be a very handy pattern to start out with in your code base. Each and every LINQ statement you use in your code can use this pattern.</p>
-
-<p>A great product of this is that it makes our LINQ statements re-usable across different parts of the codebase. So if there is some important business logic that resides as part of a query then it can be isolated, tested and re-used. You can even inherit from it, decorate it or any other pattern you might use with any normal abstraction.</p>
-</article>
-    <footer class="post-footer">
-      
-      <ul class="post-tags">
-        
-          <li><a href="https://www.scottguymer.co.uk/tags/c"><span class="tag">C#</span></a></li>
-        
-          <li><a href="https://www.scottguymer.co.uk/tags/linq"><span class="tag">Linq</span></a></li>
-        
-      </ul>
-      
-      <p class="post-copyright">
-        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>343</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.
-      </p>
-    </footer>
-    
-      <div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "scottguymer" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      
-    
-  </section>
-  <footer class="site-footer">
-  <p>© 2017-2019 Scott Guymer</p>
-  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
-  
-</footer>
-
-
-
-<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
-<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/x-mathjax-config">
+}
+</code></pre></div><p>This isnt just useful on legacy code. It can be a very handy pattern to start out with in your code base. Each and every LINQ statement you use in your code can use this pattern.</p><p>A great product of this is that it makes our LINQ statements re-usable across different parts of the codebase. So if there is some important business logic that resides as part of a query then it can be isolated, tested and re-used. You can even inherit from it, decorate it or any other pattern you might use with any normal abstraction.</p></article><footer class=post-footer><ul class=post-tags><li><a href=https://www.scottguymer.co.uk/tags/c><span class=tag>C#</span></a></li><li><a href=https://www.scottguymer.co.uk/tags/linq><span class=tag>Linq</span></a></li></ul><p class=post-copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.This post was published <strong>695</strong> days ago, content in the post may be inaccurate, even wrong now, please take risk yourself.</p></footer><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"scottguymer"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section><footer class=site-footer><p>© 2017-2020 Scott Guymer</p><p>Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a> with theme <a href=https://github.com/laozhu/hugo-nuo target=_blank>Nuo</a>.</p></footer><script async src=//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js></script><script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
   MathJax.Hub.Config({
     tex2jax: {
       inlineMath: [['$','$'], ['\\(','\\)']],
@@ -379,33 +82,11 @@ It can however like a lot of great tools be horrendously misused by a lot of peo
       extensions: ["AMSmath.js", "AMSsymbols.js"] }
     }
   });
-</script>
-<script type="text/x-mathjax-config">
+</script><script type=text/x-mathjax-config>
   // Fix <code> tags after MathJax finishes running. This is a
   // hack to overcome a shortcoming of Markdown. Discussion at
   // https://github.com/mojombo/jekyll/issues/199
   MathJax.Hub.Queue(() => {
     MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
   });
-</script>
-
-<script src="https://www.scottguymer.co.uk/js/bundle.js"></script>
-
-
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-113812052-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-
-
-
-  </body>
-</html>
+</script><script src=https://www.scottguymer.co.uk/js/bundle.js></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-113812052-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>
