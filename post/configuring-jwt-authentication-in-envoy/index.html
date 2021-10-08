@@ -11,7 +11,7 @@ is-active"><a href=https://www.scottguymer.co.uk/>Home</a></li><li class=menu-it
           <span style=color:#66d9ef>issuer</span>: my_issuer_name
           <span style=color:#66d9ef>audiences</span>:
             - audience_to_validate
-          <span style=color:#66d9ef>forward</span>: <span style=color:#e6db74>&#34;true&#34;</span>
+          <span style=color:#66d9ef>forward</span>: <span style=color:#e6db74>&#39;true&#39;</span>
           <span style=color:#66d9ef>remote_jwks</span>:
             <span style=color:#66d9ef>http_uri</span>:
               <span style=color:#66d9ef>uri</span>: https://my.provider/jwks_url
@@ -23,7 +23,7 @@ is-active"><a href=https://www.scottguymer.co.uk/>Home</a></li><li class=menu-it
         - <span style=color:#66d9ef>match</span>: { <span style=color:#66d9ef>prefix</span>: /api }
           <span style=color:#66d9ef>requires</span>:
             <span style=color:#66d9ef>provider_name</span>: oidc_provider
-      <span style=color:#66d9ef>bypass_cors_preflight</span>: <span style=color:#e6db74>&#34;true&#34;</span>
+      <span style=color:#66d9ef>bypass_cors_preflight</span>: <span style=color:#e6db74>&#39;true&#39;</span>
 </code></pre></div><p>To explain this config</p><ul><li><code>providers:</code> section describes the (1 or more) providers that can be used to validated tokens passed on requests that go through this HTTP filter.<ul><li><code>issuer:</code> is the exact value of the <code>iss</code> property in the tokens to be validated. This is usually a URL</li><li><code>audiences:</code> a list of valid audiences that can be in the <code>aud</code> value in the JWT</li><li><code>forward:</code> true here means that the <code>Authorization</code> header will be forwarded to the upstream service. This is useful for later use.</li><li><code>remote_jwks:</code> this is used to configure Envoy to retrieve the signing keys directly from the IdP and cache them locally. There are other possibilities on how to configure this for instance with a static set of key values. Here you need to provide the URL to query the keys from and the cluster configuration (configured later) that will be used to query the URL. We also configure the cache duration here to 5 mins which should be more than enough.</li></ul></li><li><code>rules:</code> represents the set of rules used to decide which requests will need to be validated and which can be simply passed on. In my case, I wanted to validate everything on <code>/api</code> and I want to validate using the provider we just configured above.</li><li><code>bypass_cors_preflight</code> This is used to tell envoy to bypass validation on any CORS preflight requests issued by the browser</li></ul><h3 id=cluster-configuration>Cluster Configuration</h3><p>In my case, I wanted to automatically retrieve the latest signing keys from the JWKS URL of my OIDC IdP. To enable this you need to create a cluster specifically for the IdP domain and port.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>clusters</span>:
   - <span style=color:#66d9ef>name</span>: identity_provider
     <span style=color:#66d9ef>connect_timeout</span>: <span style=color:#ae81ff>0.</span>25s
